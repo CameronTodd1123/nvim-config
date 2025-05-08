@@ -1,14 +1,26 @@
 local log_var = require("utils.log_var")
-local toggle_console = require("utils.toggle_console")
+local side = require("utils.side_panel")
 
 -- Set leader key to space
 vim.g.mapleader = " "
 
 local keymap = vim.keymap
 
+-- AIs
+keymap.set("n", "<leader>ag", side.toggle_goose, { desc = "Toggle Goose" })
+keymap.set("n", "<leader>ai", side.toggle_openai, { desc = "Toggle OpenAI" })
+
+-- Toggle Terminal
+keymap.set("n", "<leader>tt", side.toggle_console, { desc = "Toggle terminal" })
+
+-- Scrolling
+keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up half-page and center" })
+keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down half-page and center" })
+keymap.set("n", "n", "nzzzv",       { desc = "Search next and center" })
+keymap.set("n", "N", "Nzzzv",       { desc = "Search previous and center" })
+
 -- Special Cams Logging
 keymap.set("n", "<leader>lp", log_var.log_variable, { desc = "Log variable under cursor" })
-keymap.set("n", "<leader>tt", toggle_console.toggle, { desc = "Toggle terminal" })
 keymap.set('n', '<leader>le', function()
   local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
   if buftype == 'terminal' then
