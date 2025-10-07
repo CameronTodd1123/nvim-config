@@ -6,10 +6,22 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap
 
--- AIs
-keymap.set("n", "<leader>ag", side.toggle_goose, { desc = "Toggle Goose" })
-keymap.set("n", "<leader>ai", side.toggle_openai, { desc = "Toggle OpenAI" })
 
+-- Copilot keymaps
+vim.keymap.set("n", "<leader>ct", function()
+  require("copilot.suggestion").toggle_auto_trigger()
+  vim.notify("Copilot: toggled auto_trigger")
+end, { desc = "Copilot: toggle auto trigger" })
+-- Hard stop / start Copilot client (global on/off)
+vim.keymap.set("n", "<leader>cX", function()
+  require("copilot.client").stop()
+  vim.notify("Copilot: stopped")
+end, { desc = "Copilot stop" })
+vim.keymap.set("n", "<leader>cS", function()
+  require("copilot.client").start()
+  vim.notify("Copilot: started")
+end, { desc = "Copilot start" })
+--
 -- Toggle Terminal
 keymap.set("n", "<leader>tt", side.toggle_console, { desc = "Toggle terminal" })
 
@@ -171,18 +183,6 @@ keymap.set("n", '<leader>d?', function() local widgets = require "dap.ui.widgets
 keymap.set("n", '<leader>df', '<cmd>Telescope dap frames<cr>')
 keymap.set("n", '<leader>dh', '<cmd>Telescope dap commands<cr>')
 keymap.set("n", '<leader>de', function() require('telescope.builtin').diagnostics({default_text=":E:"}) end)
-
--- Copilot Chat
-keymap.set("n", "<leader>zc", "<cmd>CopilotChat<CR>", { desc = "Chat with Copilot" })
-keymap.set("v", "<leader>ze", "<cmd>CopilotChatExplain<CR>", { desc = "Explain Code" })
-keymap.set("v", "<leader>zr", "<cmd>CopilotChatReview<CR>", { desc = "Review Code" })
-keymap.set("v", "<leader>zf", "<cmd>CopilotChatFix<CR>", { desc = "Fix Code Issues" })
-keymap.set("v", "<leader>zo", "<cmd>CopilotChatOptimize<CR>", { desc = "Optimize Code" })
-keymap.set("v", "<leader>zd", "<cmd>CopilotChatDocs<CR>", { desc = "Generate Docs" })
-keymap.set("v", "<leader>zt", "<cmd>CopilotChatTests<CR>", { desc = "Generate Tests" })
-keymap.set("v", "<leader>zg", "<cmd>CopilotChatCommit<CR>", { desc = "Generate Commit Message" })
-keymap.set("n", "<leader>zq", "<cmd>CopilotChatToggle<CR>", { desc = "Toggle Copilot Chat" })
-keymap.set("v", "<leader>zG", "<cmd>CopilotChatCommitStaged<CR>", { desc = "Generate Commit for Selection" })
 
 -- Database Viewer
 -- Start DBUI
