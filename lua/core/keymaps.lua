@@ -1,29 +1,13 @@
 local log_var = require("utils.log_var")
-local side = require("utils.side_panel")
+local terminal = require("utils.toggle_console")
 
 -- Set leader key to space
 vim.g.mapleader = " "
 
 local keymap = vim.keymap
 
-
--- Copilot keymaps
-vim.keymap.set("n", "<leader>ct", function()
-  require("copilot.suggestion").toggle_auto_trigger()
-  vim.notify("Copilot: toggled auto_trigger")
-end, { desc = "Copilot: toggle auto trigger" })
--- Hard stop / start Copilot client (global on/off)
-vim.keymap.set("n", "<leader>cX", function()
-  require("copilot.client").stop()
-  vim.notify("Copilot: stopped")
-end, { desc = "Copilot stop" })
-vim.keymap.set("n", "<leader>cS", function()
-  require("copilot.client").start()
-  vim.notify("Copilot: started")
-end, { desc = "Copilot start" })
---
 -- Toggle Terminal
-keymap.set("n", "<leader>tt", side.toggle_console, { desc = "Toggle terminal" })
+keymap.set("n", "<leader>tt", terminal.toggle, { desc = "Toggle terminal" })
 
 -- Scrolling
 keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up half-page and center" })
@@ -191,5 +175,4 @@ keymap.set("n", "<leader>dbb", ":tabnew | DBUI<CR>", { desc = "Open DBUI" })
 keymap.set("n", "<leader>dbt", ":DBUIToggle<CR>", { desc = "Toggle DBUI" })
 keymap.set("n", "<leader>dbr", ":DB<CR>", { desc = "Run SQL query" })
 keymap.set("n", "<leader>dbf", ":DBUIRefresh<CR>", { desc = "Refresh DBUI schema" })
-
 

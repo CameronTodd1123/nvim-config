@@ -25,6 +25,23 @@ return {
   },
 
   config = function()
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          diagnostics = { globals = { 'vim' } },
+        },
+      },
+    })
+
+    vim.lsp.config('pyright', {
+      settings = {
+        python = {
+          venvPath = ".pixi/envs",
+          pythonPath = ".pixi/envs/default/bin/python",
+        },
+      },
+    })
+
     require('mason').setup()
     require('mason-lspconfig').setup({
       -- Install these LSPs automatically
@@ -40,7 +57,7 @@ return {
         'lemminx',
         'marksman',
         'yamlls',
-        'tsserver',
+        'ts_ls',
         'pyright',
       },
       automatic_enable = true,
@@ -63,29 +80,6 @@ return {
     -- There is an issue with mason-tools-installer running with VeryLazy, since it triggers on VimEnter which has already occurred prior to this plugin loading so we need to call install explicitly
     -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim/issues/39
     vim.api.nvim_command('MasonToolsInstall')
-
-
-    -- Lua LSP settings
-    local lspconfig = require('lspconfig')
-
-    -- Lua
-    lspconfig.lua_ls.setup({
-      settings = {
-        Lua = {
-          diagnostics = { globals = { 'vim' } },
-        },
-      },
-    })
-
-    -- Python
-    lspconfig.pyright.setup({
-      settings = {
-        python = {
-          venvPath = ".pixi/envs",
-          pythonPath = ".pixi/envs/default/bin/python",
-        },
-      },
-    })
 
     -- Globally configure all LSP floating preview popups (like hover, signature help, etc)
     local open_floating_preview = vim.lsp.util.open_floating_preview
